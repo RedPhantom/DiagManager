@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Search Diagnosis - PencilSoftware</title>
+    <!-- Bootstrap -->
+    <link href="resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="resources/css/custom.css" rel="stylesheet" />
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    
+</head>
+<body>
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                type: "GET",
+                url: "resources/CMS32_DESC_LONG_SHORT_DX.csv",
+                dataType: "text",
+                success: function (data) {
+                    processData(data);
+                }
+            });
+            
+        });
+
+        function processData(allText) {
+            var allTextLines = allText.split(/\r\n|\n/);
+            var headers = allTextLines[0].split('|');
+            var lines = [];
+
+            for (var i = 1; i < allTextLines.length; i++) {
+                var data = allTextLines[i].split('|');
+                if (data.length == headers.length) {
+
+                    var tarr = [];
+                    for (var j = 0; j < headers.length; j++) {
+                        tarr.push(data[j]);
+                    }
+                    lines.push(tarr);
+                }
+            }
+            window.data = lines;
+        }
+
+    </script>
+
+    <h1 style="margin-bottom: 30px;">ICD-9 ENTRY LOOKUP <small>Developed by Itay Asayag</small></h1>
+
+    <form class="form-inline" style="margin-bottom: 35px;">
+        <div class="form-group">
+            <input id="query" name="query" type="text" placeholder="Type here..." class="form-control" style="margin-right: 15px;" onkeyup="doSearch();">
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="class" style="margin-right: 5px;">Select Class</label>
+            <select id="class" name="class" class="form-control">
+                <option value="1">Option one</option>
+                <option value="2">Option two</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <input id="limit" name="limit" class="form-control" type="number" min="1" max="1000" value="100" placeholder="Result number">
+        </div>
+       
+    </form>
+     
+    <table class="table table-striped" id="table">
+        <thead>
+            <tr>
+                <th>ICD-9 ID</th>
+                <th>Long Description</th>
+                <th>Short Description</th>
+            </tr>
+        </thead>
+        <tr><td><p class="text-muted">Search a term <a href="#" onclick=document.getElementById("query").focus()>above</a> to get started.</p></td></tr>
+    </table>
+
+    <hr />
+    <script src="resources/js/DiagMan.js"></script>
+    <small>Copyright &copy; 2017 - </small>
+    <a href="about.html"><img src="resources/img/PencilSoftware.svg" style="width: 100px" /></a>
+    <small>Click the logo for more information. <strong>Version 1.0.0</strong></small>
+    <script src="resources/js/bootstrap.min.js"></script>
+    
+
+</body>
+</html>
