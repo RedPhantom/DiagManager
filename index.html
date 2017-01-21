@@ -52,14 +52,12 @@
        
         <div class="form-group">
             <label class="control-label" for="source">Select Source</label>
-            <select id="source" name="source" class="form-control">
+            <select onchange="updateSource(); $('#source').popover('show')" id="source" name="source" class="form-control" data-container="body" data-placement="bottom" data-content="Data source has been updated. Type in the search bar to get started.">
                 <option value="0">ICD-9 (default)</option>
                 <option value="1">Ward Diagnosis</option>
                 <option value="2">Option two</option>
             </select>
-            <button id="dataGo" type="button" class="btn btn-default" onclick="updateSource()" data-container="body" data-placement="bottom" data-content="Data source has been updated. Type in the search bar to get started.">Go
-                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> 
-            </button>
+            
         </div>
   
         <label class="control-label text-muted" id="sourceStatus" style="margin-right: 5px;"></label>
@@ -98,7 +96,7 @@
                     Source code is availbale by pressing the "Latest Build" value. <br /></p>
 
                     <h2>Contact</h2>
-                    <p>For software issues, please <a href="https://github.com/RedPhantom/DiagManager/issues">submit a ticket</a>. <br />
+                    <p>For software issues, please <a href="https://github.com/RedPhantom/DiagManager/issues" class="external-link">submit a ticket</a> on GitHub. <br />
                     Send an e-mail via itay.asayag.rp@gmail.com.</p>
 
                     <h2>Usage</h2>

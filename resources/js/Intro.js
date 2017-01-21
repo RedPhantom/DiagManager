@@ -6,7 +6,6 @@ window.datasource[2] = "";
 function updateSource() {
 
     window.selectedDataSource = document.getElementById("source").value;
-
     $.ajax({
         type: "GET",
         url: window.datasource[selectedDataSource],
@@ -16,14 +15,13 @@ function updateSource() {
         }
     });
     console.log("new source is " + window.datasource[selectedDataSource]);
-   // document.getElementById("sourceStatus").innerHTML = "Source updated. Start typing a search query to continue.";
-    $('#dataGo').popover('show')
+    $('tbody').fadeOut(300);
 }
 
 $(document).ready(function () {
     updateSource();
-    //document.getElementById("sourceStatus").innerHTML = ""; // prevent the text from appearing upon reloading the page.
-    //$('#dataGo').popover('hide')
+    $('#source').popover('hide') // prevent the text from appearing upon reloading the page.
+    $('tbody').show() // as well as the result table
 });
 
 function processData(allText) {
