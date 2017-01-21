@@ -7,6 +7,10 @@
 *.userosscache
 *.sln.docstates
 
+npm.js
+bootstrap*.*
+gylph*.*
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
