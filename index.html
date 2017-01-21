@@ -16,51 +16,30 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-31413535-2', 'auto');
+  ga('send', 'pageview');
+
+    </script>
 </head>
 <body>
-    <script>
-        $(document).ready(function () {
-            $.ajax({
-                type: "GET",
-                url: "resources/CMS32_DESC_LONG_SHORT_DX.csv",
-                dataType: "text",
-                success: function (data) {
-                    processData(data);
-                }
-            });
-            
-        });
-
-        function processData(allText) {
-            var allTextLines = allText.split(/\r\n|\n/);
-            var headers = allTextLines[0].split('|');
-            var lines = [];
-
-            for (var i = 1; i < allTextLines.length; i++) {
-                var data = allTextLines[i].split('|');
-                if (data.length == headers.length) {
-
-                    var tarr = [];
-                    for (var j = 0; j < headers.length; j++) {
-                        tarr.push(data[j]);
-                    }
-                    lines.push(tarr);
-                }
-            }
-            window.data = lines;
-        }
-
+    <script src="resources/js/Intro.js">
     </script>
 
     <h1 style="margin-bottom: 30px;">ICD-9 ENTRY LOOKUP <small>Developed by Itay Asayag</small></h1>
 
     <form class="form-inline" style="margin-bottom: 35px;">
         <div class="form-group">
-            <input id="query" name="query" type="text" placeholder="Type here..." class="form-control" style="margin-right: 15px;" onkeyup="doSearch();">
+            <input tabindex="0" autofocus id="query" name="query" type="text" placeholder="Search here..." class="form-control" onkeyup="doSearch();">
+        <span class="separator"></span>
         </div>
         <div class="form-group">
-            <label class="control-label" for="class" style="margin-right: 5px;">Select Class</label>
+            <label class="control-label" for="class">Select Class</label>
             <select id="class" name="class" class="form-control">
                 <option value="1">Option one</option>
                 <option value="2">Option two</option>
@@ -71,26 +50,72 @@
             <input id="limit" name="limit" class="form-control" type="number" min="1" max="1000" value="100" placeholder="Result number">
         </div>
        
+        <div class="form-group">
+            <label class="control-label" for="source">Select Source</label>
+            <select id="source" name="source" class="form-control">
+                <option value="0">ICD-9 (default)</option>
+                <option value="1">Ward Diagnosis</option>
+                <option value="2">Option two</option>
+            </select>
+            <input class="btn btn-default" type="button" onclick="updateSource()" value="Go" />
+        </div>
+  
+        <label class="control-label text-muted" id="sourceStatus" style="margin-right: 5px;"></label>
     </form>
      
-    <table class="table table-striped" id="table">
+
+    <table class="table table-hover" id="table">
         <thead>
             <tr>
-                <th>ICD-9 ID</th>
-                <th>Long Description</th>
-                <th>Short Description</th>
+            <tr>
+                <th style="width: 10%;">ICD-9 ID</th>
+                <th style="width: 70%;">Long Description</th>
+                <th style="width: 20%;">Short Description</th>
             </tr>
         </thead>
-        <tr><td><p class="text-muted">Search a term <a href="#" onclick=document.getElementById("query").focus()>above</a> to get started.</p></td></tr>
+        <tr><td></td><td><p class="text-muted">Search a term <a href="#" onchange=document.getElementById("query").focus()>above</a> to get started.</p></td><td></td></tr>
     </table>
 
     <hr />
     <script src="resources/js/DiagMan.js"></script>
     <small>Copyright &copy; 2017 - </small>
-    <a href="about.html"><img src="resources/img/PencilSoftware.svg" style="width: 100px" /></a>
-    <small>Click the logo for more information. <strong>Version 1.0.0.2</strong></small>
+    <a href="#" data-toggle="modal" data-target="#about"><img src="resources/img/PencilSoftware.svg" style="width: 100px" /></a>
+    <small>Click the logo for more information. <strong>Version <kbd>1.0.0.0</kbd>. Latest build: <a href="https://github.com/RedPhantom/DiagManager"><kbd>21/07/2017</kbd></a></strong>. This website uses cookies. <a href="cp.html">Learn more</a>. <a href="pp.html">Privacy policy</a>.</small>
     <script src="resources/js/bootstrap.min.js"></script>
-    
 
+    <div class="modal fade" id="about" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">About</h4>
+                </div>
+                <div class="modal-body">
+                    <h2>Developer</h2>
+                    <p>This application is developed by Itay Asayag. <br />
+                    Source code is availbale by pressing the "Latest Build" value. <br /></p>
+
+                    <h2>Contact</h2>
+                    <p>For software issues, please <a href="https://github.com/RedPhantom/DiagManager/issues">submit a ticket</a>. <br />
+                    Send an e-mail via itay.asayag.rp@gmail.com.</p>
+
+                    <h2>Usage</h2>
+                    <p>
+                        From left to right:
+                        <ol>
+                            <li><strong>Search query</strong>. Can contain text to be searched in the Long Description field.</li>
+                            <li><strong>Search class</strong>. The scope in which to search.</li>
+                            <li><strong>Number of Results</strong>. Defaults to 100.</li>
+                            <li><strong>Data source</strong>. Can be ICD-9 standard source or be customized to Ward Diagnosis. Submit the chamnges by pressing "Go".</li>
+                            
+                        </ol>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

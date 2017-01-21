@@ -1,10 +1,7 @@
-﻿
-
-
-
-function doSearch() {
+﻿function doSearch() {
+    document.getElementById("sourceStatus").innerHTML = ""; // reset the source status
     var table = document.getElementById("table");  // set this to your table
-    document.getElementById("table").innerHTML = "<thead><tr><th>ICD-9 ID</th><th>Long Description</th><th>Short Description</th></tr></thead>"; // clean the table
+    document.getElementById("table").innerHTML = '<thead><tr><th style="width: 10%;">ICD-9 ID</th><th style="width: 70%;">Long Description</th><th style="width: 20%;">Short Description</th></tr></thead>'; // clean the table
 
     var tbody = document.createElement("tbody");
     table.appendChild(tbody);
@@ -15,11 +12,14 @@ function doSearch() {
 
     console.log("searching " + _term);
     var result;
+
+    // put on a curtain
+    tbody.setAttribute("hidden", "");
+
+
     for (var i = 0, len = _data.length; i < len; i++) {
 
-        
-
-        if (_data[i][2].toLowerCase().includes(_term.toLowerCase())) { // search in third column, short description. INDEX = 2        
+        if (_data[i][1].toLowerCase().includes(_term.toLowerCase())) { // search in second column, long description. INDEX = 2        
             var row = document.createElement("tr");
             data[i].forEach(function (item) {
                 var cell = document.createElement("td");
@@ -31,5 +31,9 @@ function doSearch() {
                 }
             });
         }
-    }    
+    }
+    // remove the curtain
+    //tbody.removeAttribute("hidden");
+    $(tbody).hide().fadeIn(350);
 }
+
