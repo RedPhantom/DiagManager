@@ -57,7 +57,7 @@
                 <option value="1">Ward Diagnosis</option>
                 <option value="2">Option two</option>
             </select>
-            <button type="button" class="btn btn-default" onclick="updateSource()">Go
+            <button id="dataGo" type="button" class="btn btn-default" onclick="updateSource()" data-container="body" data-placement="bottom" data-content="Data source has been updated. Type in the search bar to get started.">Go
                 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> 
             </button>
         </div>
@@ -75,7 +75,7 @@
                 <th style="width: 20%;">Short Description</th>
             </tr>
         </thead>
-        <tr><td></td><td><p class="text-muted">Search a term <a href="#" onchange=document.getElementById("query").focus()>above</a> to get started.</p></td><td></td></tr>
+        <tr><td></td><td><p class="text-muted">Search a term <a href="#" onchange="document.getElementById('query').focus()">above</a> to get started.</p></td><td></td></tr>
     </table>
 
     <hr />

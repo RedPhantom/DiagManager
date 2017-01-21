@@ -1,5 +1,6 @@
 ﻿function doSearch() {
-    document.getElementById("sourceStatus").innerHTML = ""; // reset the source status
+    $('#dataGo').popover('hide')
+    //document.getElementById("sourceStatus").innerHTML = ""; // reset the source status
     var table = document.getElementById("table");  // set this to your table
     document.getElementById("table").innerHTML = '<thead><tr><th style="width: 10%;">ICD-9 ID</th><th style="width: 70%;">Long Description</th><th style="width: 20%;">Short Description</th></tr></thead>'; // clean the table
 

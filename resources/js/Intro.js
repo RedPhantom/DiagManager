@@ -16,12 +16,14 @@ function updateSource() {
         }
     });
     console.log("new source is " + window.datasource[selectedDataSource]);
-    document.getElementById("sourceStatus").innerHTML = "Source updated. Start typing a search query to continue.";
+   // document.getElementById("sourceStatus").innerHTML = "Source updated. Start typing a search query to continue.";
+    $('#dataGo').popover('show')
 }
 
 $(document).ready(function () {
     updateSource();
-    document.getElementById("sourceStatus").innerHTML = ""; // prevent the text from appearing upon reloading the page.
+    //document.getElementById("sourceStatus").innerHTML = ""; // prevent the text from appearing upon reloading the page.
+    //$('#dataGo').popover('hide')
 });
 
 function processData(allText) {
