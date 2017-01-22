@@ -28,11 +28,11 @@
     </script>
 </head>
 <body>
-    <script src="resources/js/Intro.js">
-    </script>
+    <script src="resources/js/Intro.js"></script>
+    <script src="resources/js/notify.min.js"></script>
 
     <h1 style="margin-bottom: 30px;">ICD-9 ENTRY LOOKUP <small>Developed by Itay Asayag</small></h1>
-
+    <!-- Search bar -->
     <form class="form-inline" style="margin-bottom: 35px;">
         <div class="form-group">
             <input tabindex="0" autofocus id="query" name="query" type="text" placeholder="Search here..." class="form-control" onkeyup="doSearch();">
@@ -62,8 +62,32 @@
   
         <label class="control-label text-muted" id="sourceStatus" style="margin-right: 5px;"></label>
     </form>
-     
+    
+    <!-- Toolbar -->
+    <div id="custom-bootstrap-menu" class="navbar navbar-default " role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-menubuilder">
+                    <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse navbar-menubuilder">
+                <ul class="nav navbar-nav navbar-left">
+                    <!-- standard toolbox -->
+                    <li>
+                        <a href="#" onclick="" data-toggle="tooltip" title="Copy the selected ICD-9 ID to clipboard.">Copy</a>
+                        
+                     </li>
 
+                    <!-- separator -->
+
+                    <!-- ward diagnosis additional buttons -->
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- result table -->
     <table class="table table-hover" id="table">
         <thead>
             <tr>

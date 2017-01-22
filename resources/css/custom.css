@@ -10,3 +10,32 @@
     padding-left: 17px;
     border-left: 3px solid #171164;  
 }
+.selectedRow {
+  background-color: #e0e0e0;
+}
+
+/* darkening animation */
+@-webkit-keyframes fadeIt {
+  0%   { background-color: #FFFFFF; }
+  100% { background-color: #e0e0e0; }
+}
+@-moz-keyframes fadeIt {
+  0%   { background-color: #FFFFFF; }
+  100% { background-color: #e0e0e0; }
+}
+@-o-keyframes fadeIt {
+  0%   { background-color: #FFFFFF; }
+  100% { background-color: #e0e0e0; }
+}
+@keyframes fadeIt {
+  0%   { background-color: #FFFFFF; }
+  100% { background-color: #e0e0e0; }
+}
+
+.fadebg{    
+    background-image:none !important;
+    -webkit-animation: fadeIt 0.3s ease-in-out; 
+       -moz-animation: fadeIt 0.3s ease-in-out; 
+         -o-animation: fadeIt 0.3s ease-in-out; 
+            animation: fadeIt 0.3s ease-in-out; 
+}

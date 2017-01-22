@@ -17,7 +17,7 @@
 
         if (_data[i][1].toLowerCase().includes(_term.toLowerCase())) { // search in second column, long description. INDEX = 1     
             var row = document.createElement("tr");
-            $(row).addClass('selectable')
+            $(row).addClass('selectable') //mark the row as selectable and by clicking trigger the copyToClipboard method (Intro.js)
             data[i].forEach(function (item) {
                 var cell = document.createElement("td");
                 cell.textContent = item;
@@ -33,11 +33,17 @@
 }
 
 // upon selection of table row
-$('#table').on('click',".selectable", function (event) {
+$('#table').on('click', ".selectable", function (event) {
     var selectedRow = [];
-    $(this).addClass('bg-info').siblings().removeClass('bg-info');
-    window.icdSelected = selectedRow[0]
+
+    $(this).addClass('selectedRow').siblings().removeClass('selectedRow');     // apply css for selected row
+    $(this).addClass('copyCandidate').siblings().removeClass('copyCandidate'); // select row to copy
+    $(this).addClass('fadebg').siblings().removeClass('fadebg'); // add animations
+
+
+    window.icdSelected = selectedRow[0];
     selectedRow.push($(this).find("td:first").text());
+    
     console.log("selected ICD-9 code: " + selectedRow[0]);
 });
 
