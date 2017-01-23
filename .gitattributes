@@ -61,3 +61,11 @@
 #*.PDF   diff=astextplain
 #*.rtf   diff=astextplain
 #*.RTF   diff=astextplain
+
+
+resources/css/bootstrap*.*	linguist-vendored
+resources/js/bootstrap*.*	linguist-vendored
+resources/js/npm.js
+
+cookie-policy.htm			linguist-vendored
+privacy-policy.htm			linguist-vendored
