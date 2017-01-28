@@ -66,6 +66,7 @@
 resources/css/bootstrap*.*	linguist-vendored
 resources/js/bootstrap*.*	linguist-vendored
 resources/js/npm.js
+select2/*					linguist-vendored
 
 cookie-policy.htm			linguist-vendored
 privacy-policy.htm			linguist-vendored
