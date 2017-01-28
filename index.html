@@ -14,7 +14,7 @@
     <link href="resources/css/custom.css" rel="stylesheet" />
 
     <!-- Select2 CSS -->
-    <link href="resources/select2/css/select2.min.css" rel="stylesheet" />
+    <link href="resources/select2/css/select2.css" rel="stylesheet" />
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -38,6 +38,19 @@
 <body>
     <script src="resources/js/Intro.js"></script>
     <script src="resources/js/notify.min.js"></script>
+    
+    <script>
+        /* Select2 activation code */
+      
+        $(document).ready(function() {
+            $(".js-example-placeholder-single").select2(
+                {
+                    placeholder: "Select a Collection..."
+                }
+             );
+        });
+
+    </script>
 
     <h1 style="margin-bottom: 30px;">ICD-9 ENTRY LOOKUP <small>Developed by Itay Asayag</small></h1>
     <!-- Search bar -->
@@ -72,18 +85,22 @@
     </form>
     
     <!-- Toolbar -->
-    <div id="custom-bootstrap-menu" class="navbar navbar-default " role="navigation">
+    <div class="navbar navbar-default" role="navigation">
         <div class="container-fluid">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-menubuilder">
-                    <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-                </button>
+                <span class="navbar-brand">
+                    <span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>
+                </span>
+                
             </div>
             <div class="collapse navbar-collapse navbar-menubuilder">
                 <ul class="nav navbar-nav navbar-left">
                     <!-- standard toolbox -->
                     <li>
-                        <a href="#" onclick="" data-toggle="tooltip" title="Copy the selected ICD-9 ID to clipboard.">Copy</a>
+                        <a href="#" onclick="" data-toggle="tooltip" title="Copy the selected ICD-9 ID to clipboard.">
+                        <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+                            Copy
+                        </a>
                         
                      </li>
                     </ul>
@@ -92,25 +109,34 @@
                 <!-- ward diagnosis additional buttons -->
 
                 <div id="wardDiagLimiter">
-                    <ul>
+
+                    <!-- select2 texbox and dropbox combined -->
+                    <ul class="nav navbar-nav navbar-left">
                         <li>
+                            <div class="form-group">
 
+                                <select id="collectionSelection" class="js-example-placeholder-single form-control" style="width: 200px;">
+                                    <!-- <option value="<collId>"><collName></option>  - added via javascript when Collection mode is activated.-->
+                                </select>
+                            </div>
                         </li>
+
+                    <li>
+                        <a id="addToCollection" href="#" onclick="" data-toggle="tooltip" title="Add ICD-9 ID to collection.">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                            Add to collection
+                        </a>
+                    </li>
+
                         <li>
-                            <!-- select2 texbox and dropbox combined -->
-                            
-
-
-
-
-                            <a id="addEntry" href="#" onclick="" data-toggle="tooltip" title="Add the selected ICD-9 Entry to the collection."><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
-
+                            <a id="manageCollections" href="#" onclick=""  title="Add new collections" data-toggle="modal" data-target="#myModal">
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                Manage Collections
+                            </a>
                         </li>
-                        
-
                     </ul>
                 </div>
-                    
+                 
 
                  
                 
@@ -169,6 +195,30 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- manage collections -->
+
+    <div class="modal fade" id="manageCollections" tabindex="-1" role="dialog" aria-labelledby="manageCollectionsLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Manage Collections</h4>
+                </div>
+                <div class="modal-body">
+                    
+                    <table id="collections"></table>
+                     
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
