@@ -39,3 +39,11 @@
          -o-animation: fadeIt 0.3s ease-in-out; 
             animation: fadeIt 0.3s ease-in-out; 
 }
+
+/* override bootstrap.css:5984 */
+@media (min-width: 1580px) {
+  .modal-lg {
+    width: 1200px;
+    min-height:800px;
+  }
+}

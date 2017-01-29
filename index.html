@@ -45,7 +45,11 @@
         $(document).ready(function() {
             $(".js-example-placeholder-single").select2(
                 {
-                    placeholder: "Select a Collection..."
+                    placeholder: "Select a Collection...",
+                    data: [
+                [1, "Sample Collection",  [4, 847.4, 648.1, 385.6]],
+                [2, "Sample Collection2", [85, 48, 95, 74, 62, 15]]
+                    ]
                 }
              );
         });
@@ -129,7 +133,7 @@
                     </li>
 
                         <li>
-                            <a id="manageCollections" href="#" onclick=""  title="Add new collections" data-toggle="modal" data-target="#myModal">
+                            <a id="manageCollections" href="#"  title="Add new collections" data-toggle="modal" data-target="#collDiag">
                                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                                 Manage Collections
                             </a>
@@ -162,11 +166,11 @@
     <small>Copyright &copy; 2017 - </small>
     <a href="#" data-toggle="modal" data-target="#about"><img src="resources/img/PencilSoftware.svg" style="width: 100px" /></a>
     <small>Click the logo for more information. <strong>Version <kbd>1.0.0.0</kbd>. 
-        Latest build: <a href="https://github.com/RedPhantom/DiagManager"><kbd>21/07/2017</kbd></a>
+        Latest build: <a href="https://github.com/RedPhantom/DiagManager"><kbd>29/07/2017</kbd></a>
         </strong>. This website uses cookies. <a href="cookie-policy.htm">Learn more</a>. <a href="privacy-policy.htm">Privacy policy</a>.</small>
     <script src="resources/js/bootstrap.min.js"></script>
 
-    <div class="modal fade" id="about" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal fade" id="about" tabindex="-1" role="dialog" aria-labelledby="aboutLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -201,22 +205,21 @@
     </div>
 
 
-    <!-- manage collections -->
 
-    <div class="modal fade" id="manageCollections" tabindex="-1" role="dialog" aria-labelledby="manageCollectionsLabel">
-        <div class="modal-dialog" role="document">
+    <div class="modal fade" id="collDiag" tabindex="-1" role="dialog" aria-labelledby="collDiagLabel">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Manage Collections</h4>
+                    <h4 class="modal-title" id="collDiagLabel">Manage Collections</h4>
                 </div>
                 <div class="modal-body">
-                    
-                    <table id="collections"></table>
-                     
-
+                    <iframe src="manageCollection.html" style="border: 0; width: 100%; height: 900px;"></iframe>
                 </div>
                 <div class="modal-footer">
+                    <!-- usage of these buttons on the iframe is possible because they are of the same origin. More info:
+                        http://stackoverflow.com/questions/5604839/accessing-an-element-outside-of-iframe
+                    -->
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
