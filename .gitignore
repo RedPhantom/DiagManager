@@ -308,3 +308,4 @@ build/
 # End of https://www.gitignore.io/api/visualstudio,windows
 
 *.suo
+resources/select2/i18n/*

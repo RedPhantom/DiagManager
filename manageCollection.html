@@ -85,7 +85,7 @@
                     <li>
                         <form class="navbar-form navbar-left">
                             <div class="form-group">
-                                <input id="query" name="query" type="text" class="form-control" placeholder="Search collection..." onkeyup="doSearch();">
+                                <input id="query" name="query" type="text" class="form-control" placeholder="Search collection..." onkeyup="collSearch();">
                             </div>
                         </form>
                     </li>
@@ -94,7 +94,7 @@
                     </li>
 
                     <li>
-                        <button type="button" class="btn btn-default navbar-btn">Import Data</button>
+                        <button id="import-btn" type="button" class="btn btn-default navbar-btn" onclick="importData()">Import Data</button>
                     </li>
                 </ul>
             </div>
@@ -108,15 +108,16 @@
         <thead>
             
             <tr>
-                <th style="width: 10%;">Collectin Name</th>
+                <th style="width: 10%;">#</th>
+                <th style="width: 20%;">Collectin Name</th>
                 <th style="width: 70%;">Collection ID</th>
             </tr>
         </thead>
     </table>
 
     <div>
-
-        <input type="file" id="files" name="collectionSetFile" onchange="handleFiles(this.files)" />
+        <input type="file" id="import"> 
+        <!-- <input type="file" id="files" name="collectionSetFile" onchange="handleFiles(this.files)" /> -->
     </div>
 </body>
 </html>
