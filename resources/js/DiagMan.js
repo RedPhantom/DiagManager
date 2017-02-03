@@ -47,3 +47,6 @@ $('#table').on('click', ".selectable", function (event) {
     console.log("selected ICD-9 code: " + selectedRow[0]);
 });
 
+function search() {
+
+}
