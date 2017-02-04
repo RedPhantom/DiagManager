@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Search Diagnosis - PencilSoftware</title>
-    
+
     <!-- Bootstrap -->
     <link href="resources/css/bootstrap.min.css" rel="stylesheet">
 
@@ -24,30 +24,37 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Google Analytics -->
     <script>
-          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-          })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
-          ga('create', 'UA-31413535-2', 'auto');
-          ga('send', 'pageview');
+        ga('create', 'UA-31413535-2', 'auto');
+        ga('send', 'pageview');
     </script>
     <!-- Select2 JS -->
     <script src="resources/select2/js/select2.full.min.js"></script>
+
+    <!-- HTML constants -->
+    <script>
+        const mainSearch = '<thead><tr><th style="width: 10%;">ICD-9 ID</th><th style="width: 70%;">Long Description</th><th style="width: 20%;">Short Description</th></tr></thead>';
+    </script>
 </head>
 <body>
     <script src="resources/js/Intro.js"></script>
     <script src="resources/js/notify.min.js"></script>
-    
+
     <script>
         /* Select2 activation code */
-      
-        $(document).ready(function() {
+
+        $(document).ready(function () {
             $(".js-example-placeholder-single").select2(
                 {
                     placeholder: "Select a Collection...",
                     data: [
-                [1, "Sample Collection",  [4, 847.4, 648.1, 385.6]],
+                [1, "Sample Collection", [4, 847.4, 648.1, 385.6]],
                 [2, "Sample Collection2", [85, 48, 95, 74, 62, 15]]
                     ]
                 }
@@ -56,12 +63,15 @@
 
     </script>
 
-    <h1 style="margin-bottom: 30px;">ICD-9 ENTRY LOOKUP <small>Developed by Itay Asayag</small></h1>
+    <h1 style="margin-bottom: 30px;">
+        ICD-9 ENTRY LOOKUP
+        <small>Developed by Itay Asayag</small>
+    </h1>
     <!-- Search bar -->
     <form class="form-inline" style="margin-bottom: 35px;">
         <div class="form-group">
-            <input tabindex="0" autofocus id="query" name="query" type="text" placeholder="Search here..." class="form-control" onkeyup="doSearch();">
-        <span class="separator"></span>
+            <input tabindex="0" autofocus id="query" name="query" type="text" placeholder="Search here..." class="form-control" onkeyup="search('table', window.data, this.value, document.getElementById('limit').value, mainSearch);">
+            <span class="separator"></span>
         </div>
         <div class="form-group">
             <label class="control-label" for="class">Select Class</label>
@@ -74,7 +84,7 @@
         <div class="form-group">
             <input id="limit" name="limit" class="form-control" type="number" min="1" max="1000" value="100" placeholder="Result number">
         </div>
-       
+
         <div class="form-group">
             <label class="control-label" for="source">Select Source</label>
             <select onchange="updateSource(); $('#source').popover('show')" id="source" name="source" class="form-control" data-container="body" data-placement="bottom" data-content="Data source has been updated. Type in the search bar to get started.">
@@ -82,12 +92,12 @@
                 <option value="1">Ward Diagnosis</option>
                 <option value="2">Option two</option>
             </select>
-            
+
         </div>
-  
+
         <label class="control-label text-muted" id="sourceStatus" style="margin-right: 5px;"></label>
     </form>
-    
+
     <!-- Toolbar -->
     <div class="navbar navbar-default" role="navigation">
         <div class="container-fluid">
@@ -95,21 +105,20 @@
                 <span class="navbar-brand">
                     <span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>
                 </span>
-                
+
             </div>
             <div class="collapse navbar-collapse navbar-menubuilder">
                 <ul class="nav navbar-nav navbar-left">
                     <!-- standard toolbox -->
                     <li>
                         <a href="#" onclick="" data-toggle="tooltip" title="Copy the selected ICD-9 ID to clipboard.">
-                        <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+                            <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
                             Copy
                         </a>
-                        
-                     </li>
-                    </ul>
-                <!-- separator -->
 
+                    </li>
+                </ul>
+                <!-- separator -->
                 <!-- ward diagnosis additional buttons -->
 
                 <div id="wardDiagLimiter">
@@ -125,29 +134,29 @@
                             </div>
                         </li>
 
-                    <li>
-                        <a id="addToCollection" href="#" onclick="" data-toggle="tooltip" title="Add ICD-9 ID to collection.">
-                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                            Add to collection
-                        </a>
-                    </li>
+                        <li>
+                            <a id="addToCollection" href="#" onclick="" data-toggle="tooltip" title="Add ICD-9 ID to collection.">
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                Add to collection
+                            </a>
+                        </li>
 
                         <li>
-                            <a id="manageCollections" href="#"  title="Add new collections" data-toggle="modal" data-target="#collDiag">
+                            <a id="manageCollections" href="#" title="Add new collections" data-toggle="modal" data-target="#collDiag">
                                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                                 Manage Collections
                             </a>
                         </li>
                     </ul>
                 </div>
-                 
 
-                 
-                
+
+
+
             </div>
         </div>
     </div>
-    
+
     <!-- result table -->
     <table class="table table-hover" id="table">
         <thead>
@@ -158,16 +167,28 @@
                 <th style="width: 20%;">Short Description</th>
             </tr>
         </thead>
-        <tr><td></td><td><p class="text-muted">Search a term <a href="#" onchange="document.getElementById('query').focus()">above</a> to get started.</p></td><td></td></tr>
+        <tr>
+            <td></td>
+            <td>
+                <p class="text-muted">
+                    Search a term
+                    <a href="#" onchange="document.getElementById('query').focus()">above</a> to get started.
+                </p>
+            </td>
+            <td></td>
+        </tr>
     </table>
 
     <hr />
     <script src="resources/js/DiagMan.js"></script>
     <small>Copyright &copy; 2017 - </small>
     <a href="#" data-toggle="modal" data-target="#about"><img src="resources/img/PencilSoftware.svg" style="width: 100px" /></a>
-    <small>Click the logo for more information. <strong>Version <kbd>1.0.0.0</kbd>. 
-        Latest build: <a href="https://github.com/RedPhantom/DiagManager"><kbd>29/07/2017</kbd></a>
-        </strong>. This website uses cookies. <a href="cookie-policy.htm">Learn more</a>. <a href="privacy-policy.htm">Privacy policy</a>.</small>
+    <small>
+        Click the logo for more information. <strong>
+            Version <kbd>1.0.0.0</kbd>.
+            Latest build: <a href="https://github.com/RedPhantom/DiagManager"><kbd>29/07/2017</kbd></a>
+        </strong>. This website uses cookies. <a href="cookie-policy.htm">Learn more</a>. <a href="privacy-policy.htm">Privacy policy</a>.
+    </small>
     <script src="resources/js/bootstrap.min.js"></script>
 
     <div class="modal fade" id="about" tabindex="-1" role="dialog" aria-labelledby="aboutLabel">
@@ -179,21 +200,37 @@
                 </div>
                 <div class="modal-body">
                     <h2>Developer</h2>
-                    <p>This application is developed by Itay Asayag. <br />
-                    Source code is availbale by pressing the "Latest Build" value. <br /></p>
+                    <p>
+                        This application is developed by Itay Asayag.
+                        <br />
+                        Source code is availbale by pressing the "Latest Build" value.
+                        <br />
+                    </p>
 
                     <h2>Contact</h2>
-                    <p>For software issues, please <a href="https://github.com/RedPhantom/DiagManager/issues" class="external-link">submit a ticket</a> on GitHub. <br />
-                    Send an e-mail via itay.asayag.rp@gmail.com.</p>
+                    <p>
+                        For software issues, please
+                        <a href="https://github.com/RedPhantom/DiagManager/issues" class="external-link">submit a ticket</a> on GitHub.
+                        <br />
+                        Send an e-mail via itay.asayag.rp@gmail.com.
+                    </p>
 
                     <h2>Usage</h2>
                     <p>
                         From left to right:
                         <ol>
-                            <li><strong>Search query</strong>. Can contain text to be searched in the Long Description field.</li>
-                            <li><strong>Search class</strong>. The scope in which to search.</li>
-                            <li><strong>Number of Results</strong>. Defaults to 100.</li>
-                            <li><strong>Data source</strong>. Can be ICD-9 standard source or be customized to Ward Diagnosis.</li>  
+                            <li>
+                                <strong>Search query</strong>. Can contain text to be searched in the Long Description field.
+                            </li>
+                            <li>
+                                <strong>Search class</strong>. The scope in which to search.
+                            </li>
+                            <li>
+                                <strong>Number of Results</strong>. Defaults to 100.
+                            </li>
+                            <li>
+                                <strong>Data source</strong>. Can be ICD-9 standard source or be customized to Ward Diagnosis.
+                            </li>
                         </ol>
                     </p>
                 </div>
