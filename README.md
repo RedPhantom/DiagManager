@@ -1,8 +1,9 @@
 ﻿# ICD-9 Diagnosis Entry Lookup Web Utility
-Developed and maintained by Itay Asayag, developer of SmartBot and ReportViewer.
+Developed and maintained by Itay Asayag, developer of SmartBot and ReportViewer. [Read more here](http://epaca.pe.hu/).
 
-The software used in many hospitals in Israel, Camelion, lacks some features which were requested
-by many nurses and doctors.
-These features are mainly in the scope of diagnosis and the ICD-9, the standard format for these diagnosis.
-This application is aimed to server any hospital in Israel which wants some free and useful tools to
-quickley access ICD-9 entries.
+This web utility allows medical doctors to look up diagnoses through an easy-to-use web interface as well as to create collections of diagnosis.
+
+## System Requirements
+A local folder to run the application for. Every browser is supported, as well as Internet Explorer 8+.
+
+Written in Javascript.
