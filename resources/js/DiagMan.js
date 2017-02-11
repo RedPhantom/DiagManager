@@ -42,9 +42,17 @@ $('#table').on('click', ".selectable", function (event) {
 
 
     window.icdSelected = selectedRow[0];
+    console.log(selectedRow);
     selectedRow.push($(this).find("td:first").text());
-    
+    selectedRow.push($(this).find('td').eq(1).text());
+
     console.log("selected ICD-9 code: " + selectedRow[0]);
+
+
+    $(this).bind('copy', function () {
+        prompt("Press Ctrl+C again to copy the ICD-9 Entry.", selectedRow[0] + " - " + selectedRow[1])
+    });
+
 });
 
 function search() {
