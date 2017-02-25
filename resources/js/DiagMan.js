@@ -98,3 +98,7 @@ function search(resultTableId, _data, _term, _limit,theadhtml) {
     }
     $(tbody).hide().fadeIn(350);
 }
+
+function addPriority(id) {
+
+}

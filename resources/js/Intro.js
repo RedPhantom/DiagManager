@@ -3,6 +3,8 @@ window.datasource[0] = "resources/data/CMS32_DESC_LONG_SHORT_DX.csv";
 window.datasource[1] = "";
 window.datasource[2] = "";
 
+window.resultsuggestion = "resources/data/resultsuggestion.csv";
+
 function updateSource() {
 
     window.selectedDataSource = document.getElementById("source").value;
