@@ -5,10 +5,7 @@
     padding-bottom: 40px;
 }
 .control-label {
-    margin-left: 20px;
-    margin-right: 5px;
-    padding-left: 17px;
-    border-left: 3px solid #171164;  
+    margin-right: 7px;
 }
 .selectedRow {
   background-color: #e0e0e0;

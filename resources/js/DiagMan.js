@@ -75,7 +75,9 @@ For doSearch():
     theadhtml = "<thead><tr><th style="width: 10%;">ICD-9 ID</th><th style="width: 70%;">Long Description</th><th style="width: 20%;">Short Description</th></tr></thead>"
 */
 function search(resultTableId, _data, _term, _limit, theadhtml) {
-    $('#source').popover('hide')
+    $('#source').popover('hide');
+    $('#gettingstarted').hide();
+    
     var table = document.getElementById(resultTableId);
     document.getElementById("table").innerHTML = theadhtml; // clean the table
 
