@@ -21,9 +21,9 @@
     <script src="resources/js/tether.min.js"></script>
     <!-- Google Analytics -->
     <script>
-        (function(i, s, o, g, r, a, m) {
+        (function (i, s, o, g, r, a, m) {
             i['GoogleAnalyticsObject'] = r;
-            i[r] = i[r] || function() {
+            i[r] = i[r] || function () {
                 (i[r].q = i[r].q || []).push(arguments)
             }, i[r].l = 1 * new Date();
             a = s.createElement(o),
@@ -40,57 +40,36 @@
 
 <body>
     <script src="resources/js/Intro.js"></script>
+    <script src="resources/js/Settings.js"></script>
     <script src="resources/js/notify.min.js"></script>
     <script>
         $(document).ready(
-            function() {
+            function () {
                 window.headhtml = '<thead> <tr> <tr> <th style="width: 10%;">ICD-9 ID</th> <th style="width: 70%;">Long Description</th> <th style="width: 20%;">Short Description</th> </tr></thead>';
                 $("#table").html(window.headhtml + '<tbody><tr><td></td><td><div class="text-muted">Search above to get started.</div>'); // set help text for table.
+
+                loadSettings();
+                if (getCookie("settingShowHelp") != "") {
+                    $('#gettingstarted').hide();
+                }
             }
         )
     </script>
-    <h1 class="superheader" style="margin-bottom: 30px; margin-top: 20px;">ICD-9 ENTRY LOOKUP <small>Developed by Itay Asayag</small></h1>
+    <h1 class="superheader" style="margin-bottom: 10px; margin-top: 10px;">ICD-9 ENTRY LOOKUP <small>Developed by Itay Asayag</small></h1>
+        <!-- Toolbar -->
+    <div class="btn-group" role="group" style="margin-bottom: 5px">
+        <button type="button" id="btnSettings" class="btn btn-primary" onclick="$('#frmSettings').modal('show')"
+        data-container="body" data-placement="right" data-content="Settings have been saved successfully.">Settings</button>
+        <button type="button" id="btnAbout" class="btn btn-secondary" onclick="$('#about').modal('show')">About</button>
+    </div>
+
     <!-- Search bar -->
     <form class="form-inline">
-        <input tabindex="0" autofocus id="query" name="query" type="text" placeholder="Search here..." class="form-control mb-2 mr-sm-2 mb-sm-0" onkeyup="search('table',window.$data,this.value,document.getElementById('limit').value,window.headhtml);">
-        <span class="separator"></span>
-        <label class="control-label" for="class">Select Class</label>
-        <select id="class" name="class" class="form-control mb-2 mr-sm-2 mb-sm-0">
-				<option value="1">Option one</option>
-				<option value="2">Option two</option>
-			</select>
-        <label class="control-label" for="limit">Number of Results</label>
-        <input id="limit" name="limit" class="form-control mb-2 mr-sm-2 mb-sm-0" type="number" min="1" max="1000" value="100" placeholder="Number of Results">
-        <label class="control-label" for="source">Select Source</label>
-        <select onchange="updateSource(); $('#source').popover('show')" id="source" name="source" class="form-control mb-2 mr-sm-2 mb-sm-0" data-container="body" data-placement="bottom" data-content="Data source has been updated. Type in the search bar to get started.">
-				<option value="0">ICD-9 (default)</option>
-				<option value="1">Ward Diagnosis</option>
-				<option value="2">Option two</option>
-			</select>
-        <label class="control-label text-muted" id="sourceStatus" style="margin-right: 5px;"></label>
-
-        <button type="button" class="btn btn-primary" onclick="$('#about').modal('show')">About</button>
+        <input tabindex="0" autofocus id="query" name="query" type="text" placeholder="Search here..." style="width: 100% ;" class="form-control form-control-lg mb-2 mr-sm-2 mb-sm-0"
+                        onkeyup="search('table',window.$data,this.value,window.$numresults,window.headhtml);">
+                        <br>
     </form>
-    <!-- Toolbar -->
-    <div class="navbar navbar-default" role="navigation">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <span class="navbar-brand">
-					<span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>
-                </span>
-            </div>
-            <div class="collapse navbar-collapse navbar-menubuilder">
-                <ul class="nav navbar-nav navbar-left">
-                    <!-- standard toolbox -->
-                    <li>
-                        <a href="#" onclick="UponCopy" data-toggle="tooltip" title="Copy the selected ICD-9 ID to clipboard.">
-                            <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Copy
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
+
     <!-- result table -->
     <table class="table table-hover" id="table">
 
@@ -99,10 +78,11 @@
     <!-- info section -->
     <div class="alert alert-info" role="alert" id="gettingstarted">
         <h4 class="alert-heading">Welcome!</h4>
-        <p>Hey! Welcome to Diagnosis Manager, which allows you to lookup any diagnosis from any standard collection such as ICD-9. The software is functional but is still in development.
+        <p>Hey! Welcome to Diagnosis Manager, which allows you to lookup any diagnosis from any standard collection such as
+            ICD-9. The software is functional but is still in development.
         </p>
         <p class="mb-0">Feel you need some help? Don't worry, <a href="./docs" class="alert-link">We've got you covered</a>.<br>
-            <a href="#" onclick="$('#gettingstarted').hide();" class="alert-link">Dismiss</a>
+            <a href="#" onclick="$('#gettingstarted').hide(); setCookie('settingShowHelp', false, 30);" class="alert-link">Dismiss</a>
         </p>
     </div>
 
@@ -113,7 +93,7 @@
 			<small>Copyright &copy; 2017 - </small>
 			<a href="#" data-toggle="modal" data-target="#about">Itay Asayag</a>.
 			<small>Click the logo for more information. <strong>Version <kbd>1.0.0.0</kbd> (testing). 
-			Latest major update: <a href="https://github.com/RedPhantom/DiagManager"><kbd>08/06/2017</kbd></a>
+			Latest major update: <a href="https://github.com/RedPhantom/DiagManager"><kbd>12/06/2017</kbd></a>
 			</strong>. This website uses cookies. <a href="cookie-policy.htm">Learn more</a>. <a href="privacy-policy.htm">Privacy policy</a>.</small>
 			</span>
     </nav>
@@ -129,24 +109,55 @@
                 </div>
                 <div class="modal-body">
                     <h2>Developer</h2>
-                    <p>This application is developed by Itay Asayag. <br /> Source code is availbale by pressing the "Latest Build" value.
+                    <p>This application is developed by Itay Asayag. <br /> Source code is availbale by pressing the "Latest
+                        Build" value.
                         <br />
                     </p>
                     <h2>Contact</h2>
-                    <p>For software issues, please <a href="https://github.com/RedPhantom/DiagManager/issues" class="external-link">submit a ticket</a> on GitHub. <br /> Send an e-mail via itay.asayag.rp@gmail.com.</p>
+                    <p>For software issues, please <a href="https://github.com/RedPhantom/DiagManager/issues" class="external-link">submit a ticket</a>                        on GitHub. <br /> Send an e-mail via itay.asayag.rp@gmail.com.</p>
                     <h2>Usage</h2>
                     <p>
-                        From left to right:
-                        <ol>
-                            <li><strong>Search query</strong>. Can contain text to be searched in the Long Description field.</li>
-                            <li><strong>Search class</strong>. The scope in which to search.</li>
-                            <li><strong>Number of Results</strong>. Defaults to 100.</li>
-                            <li><strong>Data source</strong>. Can be ICD-9 standard source or be customized to Ward Diagnosis.</li>
-                        </ol>
+                        See the <a href="./docs">documentation</a> for more information about usage.
                     </p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal fade" id="frmSettings" tabindex="-1" role="dialog" aria-labelledby="frmSettingsLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="frmSettingsLabel">Settings</h4>
+                </div>
+                <div class="modal-body">
+                    Use this form to set up DiagMan.
+
+                    <label class="control-label" for="class">Select Class</label>
+                    <select id="class" name="class" class="form-control mb-2 mr-sm-2 mb-sm-0">
+				<option value="1">Option one</option>
+				<option value="2">Option two</option>
+			</select>
+                    <label class="control-label" for="limit">Number of Results</label>
+                    <input id="limit" name="limit" class="form-control mb-2 mr-sm-2 mb-sm-0" type="number" min="1" max="1000" value="100" placeholder="Number of Results">
+                    <label class="control-label" for="source">Select Source</label>
+                    <select onchange="updateSource();" id="source" name="source" class="form-control mb-2 mr-sm-2 mb-sm-0">
+				<option value="0">ICD-9 (default)</option>
+				<option value="1">Ward Diagnosis</option>
+				<option value="2">Option two</option>
+			</select>
+                    <label class="control-label text-muted" id="sourceStatus" style="margin-right: 5px;"></label>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick='saveSettings(
+                        document.getElementById("limit").value, document.getElementById("source").value
+                    ); $("#frmSettings").modal("hide");'>Save</button>
+                    <button type="button" class="btn btn-secondary" onclick='$("#frmSettings").modal("hide");'>Cancel</button>
                 </div>
             </div>
         </div>

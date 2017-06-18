@@ -111,7 +111,7 @@ function search(resultTableId, _data, _term, _limit, theadhtml) {
                 var cell = document.createElement("td");
                 cell.textContent = item;
                 row.appendChild(cell);
-                if (table.rows.length <= _limit) {
+                if (table.rows.length <= _limit - 1) {
                     tbody.appendChild(row);
                 }
             });
