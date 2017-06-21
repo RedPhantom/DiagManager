@@ -60,7 +60,8 @@ $('#table').on('click', ".selectable", function (event) {
     });*/
     $(this).one('copy', function () { // newer function that is only triggered once and then removed until binded again.
         addPriority(selectedRow[0]);
-        prompt("Press Ctrl+C again to copy the ICD-9 Entry.", selectedRow[0] + " - " + selectedRow[1])
+        //prompt("Press Ctrl+C again to copy the ICD-9 Entry.", selectedRow[0] + " - " + selectedRow[1])
+        uponCopy(selectedRow);
     });
 
 });

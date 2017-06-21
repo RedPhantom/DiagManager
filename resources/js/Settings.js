@@ -1,39 +1,70 @@
+var settingCollection = "settingCollection";
+var settingNumResults = "settingResult";
+var settingRowSize = "settingRowSize";
+
+function setSetting(settingName, settingValue) {
+    setCookie(settingName, settingValue, 30);
+    console.log("Setting new setting '" + settingName + "' as " + settingValue);
+}
+
+// returns true if setting does not exist
+function checkSetting(settingName) {
+    return(getCookie(settingName) == null || getCookie(settingName) == "");
+}
+
 function loadSettings() {
-    if (getCookie("settingCollection") == null || getCookie("settingCollection") == "") {
+    if (checkSetting(settingCollection)) {  // data collection
         window.selectedDataSource = 0;
-        setCookie("settingCollection", window.selectedDataSource, 30);
+        setSetting(settingCollection, 0);
         document.getElementById("source").value = window.selectedDataSource;
-        console.log("Setting new setting 'settingCollection' as " + window.selectedDataSource);
     } else {
         window.selectedDataSource = parseInt(getCookie("settingCollection"));
         document.getElementById("source").value = window.selectedDataSource;
         console.log("Loaded new setting 'settingCollection' as " + window.selectedDataSource);
     }
 
-    if (getCookie("settingResults") == null || getCookie("settingResults") == "") {
+    if (checkSetting(settingNumResults)) {  // number of results
         window.$numresults = 100;
-        setCookie("settingResults", window.$numresults, 30);
+        setSetting(settingNumResults, 100);
         document.getElementById("limit").value = window.$numresults;
-        console.log("Setting new setting 'settingResults' as " + window.$numresults);
     } else {
-        window.$numresults = parseInt(getCookie("settingResults"));
+        window.$numresults = parseInt(getCookie(settingNumResults));
         document.getElementById("limit").value = window.$numresults;
         console.log("Loaded new setting 'settingResults' as " + window.$numresults);
     }
 
+    if (checkSetting(settingRowSize)) { // size pf table row height
+        window.$rowsize = "normal";
+        setSetting(settingRowSize, "normal");
+        document.getElementById("rowSize").value = window.$numresults;
+    } else {
+        window.$rowsize = getCookie(settingRowSize);
+        document.getElementById("rowSize").value = window.$rowsize;
+
+        if (window.$rowsize == "small") {
+            $("#table").addClass("table-sm");
+        }
+        console.log("Loaded new setting 'settingRowSize' as " + window.$rowsize);
+    }
+
 }
 
-function saveSettings(numResults, selectedCollection) {
+function saveSettings(numResults, selectedCollection, rowsize) {
 
     // result limit
-    setCookie("settingResults", numResults, 30);
+    setSetting("settingResults", numResults);
     window.$numresults = parseInt(numResults);
-    console.log("Setting new setting 'settingResults' as " + numResults);
 
     // collection
-    setCookie("settingCollection", selectedCollection, 30);
+    setSetting("settingCollection", selectedCollection);
     window.selectedDataSource = parseInt(selectedCollection);
-    console.log("Setting new setting 'settingCollection' as " + selectedCollection);
+
+    setSetting("settingRowSize", rowsize);
+    window.$rowsize = rowsize;
+
+    if (window.$rowsize == "small") {
+            $("#table").addClass("table-sm");
+    }
 
     $('#btnSettings').popover('show');
     setTimeout(function () {
