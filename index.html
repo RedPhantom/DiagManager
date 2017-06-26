@@ -68,10 +68,12 @@
     </div>
 
     <!-- Search bar -->
-    <form class="form-inline">
+    <form class="form-inline" id="frmSearchBar">
         <input tabindex="0" autofocus id="query" name="query" type="text" placeholder="Search here..." style="width: 100% ;" class="form-control form-control-lg mb-2 mr-sm-2 mb-sm-0"
             onkeyup="search('table',window.$data,this.value,window.$numresults,window.headhtml);">
         <br>
+
+        <div id="collectionError" class="invisible form-control-feedback">Could not load the selected collection. Please try another.</div>
     </form>
 
     <!-- result table -->

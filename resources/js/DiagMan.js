@@ -78,7 +78,7 @@ For doSearch():
 function search(resultTableId, _data, _term, _limit, theadhtml) {
     $('#source').popover('hide');
     $('#gettingstarted').hide();
-    
+
     var table = document.getElementById(resultTableId);
     document.getElementById("table").innerHTML = theadhtml; // clean the table
 
@@ -99,23 +99,34 @@ function search(resultTableId, _data, _term, _limit, theadhtml) {
         var _term = document.getElementById("query").value;
         var _limit = document.getElementById("limit").value;
     */
+
+
+
     console.log("searching " + _term);
     var result;
 
     for (var i = 0, len = _data.length; i < len; i++) {     // all data
+        try {
+            if (_data[i][1].toLowerCase().includes(_term.toLowerCase())) { // search in second column, long description. INDEX = 1. if search result is positive, continue.
+                var row = document.createElement("tr");
+                $(row).addClass('selectable'); //mark the row as selectable and by clicking trigger the copyToClipboard method (Intro.js)
 
-        if (_data[i][1].toLowerCase().includes(_term.toLowerCase())) { // search in second column, long description. INDEX = 1. if search result is positive, continue.
-            var row = document.createElement("tr");
-            $(row).addClass('selectable'); //mark the row as selectable and by clicking trigger the copyToClipboard method (Intro.js)
-
-            _data[i].forEach(function (item) {
-                var cell = document.createElement("td");
-                cell.textContent = item;
-                row.appendChild(cell);
-                if (table.rows.length <= _limit - 1) {
-                    tbody.appendChild(row);
-                }
-            });
+                _data[i].forEach(function (item) {
+                    var cell = document.createElement("td");
+                    cell.textContent = item;
+                    row.appendChild(cell);
+                    if (table.rows.length <= _limit - 1) {
+                        tbody.appendChild(row);
+                    }
+                });        
+            }
+            $("#frmSearchBar").removeClass("has-danger");
+            $("#query").removeClass("form-control-danger");
+            $("#collectionError").addClass("invisible");
+        } catch (err) {
+            $("#frmSearchBar").addClass("has-danger");
+            $("#query").addClass("form-control-danger");
+            $("#collectionError").removeClass("invisible");
         }
     }
     var $wrapper = $('#' + resultTableId);

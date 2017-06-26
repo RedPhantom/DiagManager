@@ -30,7 +30,7 @@ function loadSettings() {
     } else {
         window.$numresults = parseInt(getCookie(settingNumResults));
         document.getElementById("limit").value = window.$numresults;
-        console.log("Loaded new setting 'settingResults' as " + window.$numresults);
+        console.log("Loaded new setting 'settingResult' as " + window.$numresults);
     }
 
     if (checkSetting(settingRowSize)) { // size pf table row height
@@ -52,7 +52,7 @@ function loadSettings() {
 function saveSettings(numResults, selectedCollection, rowsize) {
 
     // result limit
-    setSetting("settingResults", numResults);
+    setSetting("settingResult", numResults);
     window.$numresults = parseInt(numResults);
 
     // collection
@@ -64,6 +64,8 @@ function saveSettings(numResults, selectedCollection, rowsize) {
 
     if (window.$rowsize == "small") {
             $("#table").addClass("table-sm");
+    } else {
+            $("#table").removeClass("table-sm");
     }
 
     $('#btnSettings').popover('show');
