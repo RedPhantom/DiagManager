@@ -5,8 +5,9 @@ window.diagPrio = "http://asayag.ddns.net/diagman/diagPrio.php";
 function doSearch() {
     $('#source').popover('hide')
     var table = document.getElementById("table");
-    document.getElementById("table").innerHTML = '<thead><tr><th style="width: 10%;">ICD-9 ID</th><th style="width: 70%;">Long Description</th><th style="width: 20%;">Short Description</th></tr></thead>'; // clean the table
-
+    //document.getElementById("table").innerHTML = '<thead><tr><th style="width: 10%;">ICD-9 ID</th><th style="width: 70%;">Long Description</th><th style="width: 20%;">Short Description</th></tr></thead>'; // clean the table
+    // from HeaderSelector update:
+    document.getElementById("table").innerHTML = window.headhtml;
     var tbody = document.createElement("tbody");
     table.appendChild(tbody);
 

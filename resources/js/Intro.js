@@ -76,7 +76,7 @@ $(document).ready(function () {
     $('#source').popover('hide') // prevent the text from appearing upon reloading the page.
     $('tbody').show() // as well as the result table
     $('#query').on('enterKey', function (e) { // automatically copy the most searched row that matches the search query
-    result = [];
+        result = [];
         var rows = 100;
 
         for (var i = 0, len = window.$data.length; i < len; i++) {     // all data
@@ -89,7 +89,7 @@ $(document).ready(function () {
             }
         }
         result.sort(sortByKey);
-            console.log(result);
+        console.log(result);
     });
 
     $('#query').keyup(function (e) {
@@ -98,6 +98,33 @@ $(document).ready(function () {
         }
     });
 });
+
+function SortHeaders(headers) {
+    window.headhtml = "<thead><tr>";
+    var firstRow = headers;
+
+    switch (headers.length) {
+        case 1: {
+            window.headhtml += '<th>' + firstRow[0] + '</th>';
+            break;
+        }
+
+        case 2: {
+            window.headhtml += '<th style="width: 10%">' + firstRow[0] + '</th>';
+            window.headhtml += '<th style="width: 90%">' + firstRow[1] + '</th>';
+            break;
+        }
+
+        case 3: {
+            window.headhtml += '<th style="width: 10%">' + firstRow[0] + '</th>';
+            window.headhtml += '<th style="width: 70%">' + firstRow[1] + '</th>';
+            window.headhtml += '<th style="width: 20%">' + firstRow[2] + '</th>';
+            break;
+        }
+    }
+
+    window.headhtml += '</tr></thead>';
+}
 
 function processData(allText) {
     var allTextLines = allText.split(/\r\n|\n/); // regerx to split into rows
@@ -115,6 +142,8 @@ function processData(allText) {
             lines.push(tarr);
         }
     }
+    window.$headers = headers;
+    SortHeaders(headers);
     window.$data = lines;
     return lines;
 }
@@ -156,13 +185,13 @@ function SelectText(element) {
     var doc = document
         , text = doc.getElementById(element)
         , range, selection
-    ;    
+        ;
     if (doc.body.createTextRange) {
         range = document.body.createTextRange();
         range.moveToElementText(text);
         range.select();
     } else if (window.getSelection) {
-        selection = window.getSelection();        
+        selection = window.getSelection();
         range = document.createRange();
         range.selectNodeContents(text);
         selection.removeAllRanges();
