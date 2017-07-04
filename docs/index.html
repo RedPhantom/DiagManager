@@ -26,11 +26,11 @@
         body {
             margin: 30px 10% 30px 10%;
         }
-        
+
         .toc {
             margin-left: 50px;
         }
-        
+
         h1,
         h2,
         h3,
@@ -41,23 +41,29 @@
             padding-bottom: 3px;
             border-bottom-width: 2px;
         }
-        
+
         ul {
             padding-left: 20px;
             list-style: none;
         }
-        
+
         li {
             margin-bottom: 10px;
         }
-        
+
         li.folder:before {
             font-family: 'FontAwesome';
             content: '\f067';
             margin: 0 5px 0 -15px;
         }
+
         .carousel {
             color: #000000;
+        }
+
+        .custom-dent {
+            margin-left: 10%;
+            margin-right: 10%;
         }
     </style>
 </head>
@@ -163,26 +169,7 @@
                     class="img-fluid" alt="Responsive image">
                 </img>
                 Updating the results upon each keypress, the Search Bar allows for sifting through the diagnosis, searching in the <strong>description</strong>                field. Some diagnosis collections allow for short description and long description. The searching field can
-                be selected in the code. <br> I plan to add the ability to access the most-used diagnosis while typing and
-                pressing the enter key. This feature, however, requires some more work.
-            </dd>
-
-            <dt class="col-sm-3">Class-selection Dropdown</dt>
-            <dd class="col-sm-9">
-                This feature is not functional yet. It is aimed to work with diagnosis collections that have a "class" or "field" value,
-                such as cardiology, internal medicine, psychiatry etc.
-            </dd>
-
-            <dt class="col-sm-3">Number of Results</dt>
-            <dd class="col-sm-9">
-                The default number of results is 100. Setting this value to a higher number can cause lag and delay on some machines. A setting
-                of 100 seems to work on all machines, though.
-            </dd>
-
-            <dt class="col-sm-3 text-truncate">Source Selection</dt>
-            <dd class="col-sm-9">
-                This field allows you to select the collection, or "source" of diagnosis. Currently an ICD-9-like collection is used just
-                for testing purposes.
+                be selected in the code.
             </dd>
         </dl>
 
@@ -209,24 +196,142 @@
         </dl>
     </p>
 
+    <h4>Settings Dialog</h4>
+    <p>
+        Customize your experience for maximum efficiency with DiagMan.
+        <dl class="row">
+            <dt class="col-sm-3">Number of Results</dt>
+            <dd class="col-sm-9">
+                The number of results to display in the result table. A lower number means less lag and loading time.
+            </dd>
+
+            <dt class="col-sm-3">Data Source / Collection Selection</dt>
+            <dd class="col-sm-9">
+                Allows the user to select a data source from an available selection.
+            </dd>
+
+            <dt class="col-sm-3">Result Row Size</dt>
+            <dd class="col-sm-9">
+                If you're interested in seeing more compact results, select "small" from the list and the row height will be reduced. Might
+                required refreshing the page in order to take effect.
+            </dd>
+        </dl>
+    </p>
 
     <h1>Developer Documentation</h1>
     <h2>Introduction</h2>
     <p>
-        The JavaScript code is divided into three parts: <code>Intro.js</code>, <code>DiagMan.js</code> and inline HTML code.<br>        Regarding the PHP code, it exists in files that end in .php, currently <code>diagPrio.php</code>.
+        The code is divided into two ends:
+        <table class="table" style="width: 500px ;">
+            <thead>
+                <tr>
+                    <th>Front End</th>
+                    <th>Back End</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><a href="#"><code>Intro.js</code></a></td>
+                    <td><a href="#"><code>diagPrio.php</code></a></td>
+                </tr>
+                <tr>
+                    <td><a href="#"><code>Settings.js</code></a></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><a href="#"><code>CopyDiag.js</code></a></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><a href="#"><code>Settings.js</code></a></td>
+                    <td></td>
+                    </td>
+            </tbody>
+        </table>
+        The Front End files sit in the root folder. The Back End files sit in <code>./resources/js</code>.
     </p>
+    <h2>Front-End</h2>
+
     <p>
-        The folder structure is as follows:
-        <div class="container">
-
-        </div>
-
         <h3><code>Intro.js</code></h3>
         <p>
             <code>Intro.js</code> starts with a declaration of the available data sources, i.e. ICD-9 and other collections.
             This decleration will be removed somewhere in the future versions replaced by a source-managment dialog, with
             the data stored in CSV.
         </p>
+
+        <pre><code class="custom-dent js">
+    window.$datasource = {}; // data sources dictionary
+    window.$datasource[0] = "resources/data/CMS32_DESC_LONG_SHORT_DX.csv";
+    window.$datasource[1] = "";
+    window.$datasource[2] = "";
+        </code></pre>
+        <footer class="custom-dent blockquote-footer">Data sources definition in <cite title="Intro.js">an excerpt from <code>Intro.js</code></cite></footer>
+        <p>
+            Currently, results are being registered to a CSV file. This data is not used yet because I first want to see if this feature
+            is even required.
+            <pre><code class="custom-dent js">
+     window.resultsuggestion = "resources/data/searches.csv";
+            </code></pre>
+            <footer class="custom-dent blockquote-footer">Registring the address for the result data file <cite title="Intro.js">an excerpt from <code>Intro.js</code></cite></footer>
+        </p>
+
+        <h3><code>Settings.js</code></h3>
+
+        <p>
+            <code>Settings.js</code> is used to handle getting and setting the settings in the application. The data is saved
+            in the form of cookies set to expire after 30 days.
+        </p>
+        <pre><code class="custom-dent js">
+    var settingCollection = "settingCollection";
+    var settingNumResults = "settingResult";
+    var settingRowSize = "settingRowSize";
+        </code></pre>
+        <footer class="custom-dent blockquote-footer">Defining the names of the cookies <cite title="Intro.js">an excerpt from <code>Settings.js</code></cite></footer>
+
+        <p>
+            Following some low-level cookie-managment code there are definitions of two main functions:
+            <code>loadSettings()</code> and <code>saveSettings()</code>.
+            <h4><code>loadSettings()</code></h4>
+            <p>
+                Receives no paramers. <br> Description: <em>
+                Checks the settings. If saved settings exist in the cookie cache, then
+                load them into the application and set the Setting Dialog's controls to match the saved
+                values. Otherwise, save the values as the defaults.
+                </em>
+            </p>
+        </p>
+        <pre><code class="custom-dent js">
+    function loadSettings() {
+        if (checkSetting(settingCollection)) {  // data collection
+            window.selectedDataSource = 0;
+            setSetting(settingCollection, 0);
+            document.getElementById("source").value = window.selectedDataSource;
+        } else {
+            window.selectedDataSource = parseInt(getCookie("settingCollection"));
+            document.getElementById("source").value = window.selectedDataSource;
+            console.log("Loaded new setting 'settingCollection' as " + window.selectedDataSource);
+        }
+
+        [...]
+        </code></pre>
+        <h4><code>saveSettings()</code></h4>
+        <p>
+            Receivs parameters: numResults, selectedCollection, rowsize.<br> Description: <em>
+            Called upon clicking the "save" button in the settings modal, this function
+            recieves the values from the modal fields and saves them.
+            </em>
+        </p>
+        <pre><code class="custom-dent js">
+    // collection
+    setSetting("settingCollection", selectedCollection);
+    window.selectedDataSource = parseInt(selectedCollection);
+
+        [...]
+        </code></pre>
+
+    </p>
+
 </body>
 
 </html>
