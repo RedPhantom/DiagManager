@@ -48,11 +48,14 @@
     <script>
         $(document).ready(
             function () {
-                window.headhtml = '<thead> <tr> <tr> <th style="width: 10%;">ICD-9 ID</th> <th style="width: 70%;">Long Description</th> <th style="width: 20%;">Short Description</th> </tr></thead>';
+                window.headhtml = '<thead> <tr> <tr> <th> Start searching to load the table.</th></tr></thead>';
                 
                 //$("#table").html(window.headhtml + '<tbody><tr><td></td><td><div class="text-muted">Search above to get started.</div>'); // set help text for table.
 
                 loadSettings();
+                search("table", window.$data, "", 0, window.headhtml);
+                
+
                 if (getCookie("settingShowHelp") != "") {
                     $('#gettingstarted').hide();
                 }
@@ -174,12 +177,24 @@
                                 </select>
                             </div>
                         </div>
+
+                        <!-- Select Result Row Size -->
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label" for="layout">Select Application Layout</label>
+                            <div class="col-8">
+                                <select id="layout" name="layout" class="form-control">
+                                    <option value="ltr">Left to Right</option>
+                                    <option value="rtl">Right to Left</option>
+                                </select>
+                            </div>
+                        </div>
                     </form>
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" onclick='saveSettings(
                         document.getElementById("limit").value, document.getElementById("source").value,
-                        document.getElementById("rowSize").value
+                        document.getElementById("rowSize").value,
+                        document.getElementById("layout").value
                         );
                      $("#frmSettings").modal("hide");'>Save</button>
                         <button type="button" class="btn btn-default" onclick='$("#frmSettings").modal("hide");'>Cancel</button>

@@ -1,6 +1,7 @@
 var settingCollection = "settingCollection";
 var settingNumResults = "settingResult";
 var settingRowSize = "settingRowSize";
+var settingLayout = "settingLayout";
 
 function setSetting(settingName, settingValue) {
     setCookie(settingName, settingValue, 30);
@@ -44,12 +45,26 @@ function loadSettings() {
         if (window.$rowsize == "small") {
             $("#table").addClass("table-sm");
         }
+
+        
         console.log("Loaded new setting 'settingRowSize' as " + window.$rowsize);
+    }
+
+    // whether to use LTR to RTL layout.
+    if (checkSetting(settingLayout)) { // set to default
+        setSetting(settingLayout, "ltr");
+        window.$layout = "ltr";
+        document.getElementById("layout").value = window.$layout;
+    } else { // the settings are set
+        window.$layout = getCookie(settingLayout);
+        // TODO: set here the body "dir" to either LTR to RTL
+        $('body').css("direction", window.$layout);
+        console.log("Loaded new setting 'settingLayout' as " + window.$layout);
     }
 
 }
 
-function saveSettings(numResults, selectedCollection, rowsize) {
+function saveSettings(numResults, selectedCollection, rowsize, layout) {
 
     // result limit
     setSetting("settingResult", numResults);
@@ -67,6 +82,9 @@ function saveSettings(numResults, selectedCollection, rowsize) {
     } else {
             $("#table").removeClass("table-sm");
     }
+
+    setSetting("settingLayout", layout);
+    window.$layout = layout;
 
     $('#btnSettings').popover('show');
     setTimeout(function () {
