@@ -101,10 +101,19 @@ function search(resultTableId, _data, _term, _limit, theadhtml) {
         var _limit = document.getElementById("limit").value;
     */
 
-
-
     console.log("searching " + _term);
     var result;
+    
+    try {
+        var d = _data.length;
+        $("#frmSearchBar").removeClass("has-danger");
+        $("#query").removeClass("form-control-danger");
+        $("#collectionError").addClass("invisible");
+    } catch (error) {
+        $("#frmSearchBar").addClass("has-danger");
+        $("#query").addClass("form-control-danger");
+        $("#collectionError").removeClass("invisible");
+    }
 
     for (var i = 0, len = _data.length; i < len; i++) {     // all data
         try {
@@ -121,21 +130,18 @@ function search(resultTableId, _data, _term, _limit, theadhtml) {
                     }
                 });        
             }
-            $("#frmSearchBar").removeClass("has-danger");
-            $("#query").removeClass("form-control-danger");
-            $("#collectionError").addClass("invisible");
+
         } catch (err) {
-            $("#frmSearchBar").addClass("has-danger");
-            $("#query").addClass("form-control-danger");
-            $("#collectionError").removeClass("invisible");
+
         }
     }
+    /*
     var $wrapper = $('#' + resultTableId);
 
     $wrapper.find('.selectable').sort(function (a, b) {
         return +a.dataset.percentage - +b.dataset.percentage;
     })
         .appendTo($wrapper);
-
+    */
     $(tbody).hide().fadeIn(350);
 }

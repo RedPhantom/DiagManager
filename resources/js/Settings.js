@@ -46,7 +46,6 @@ function loadSettings() {
             $("#table").addClass("table-sm");
         }
 
-        
         console.log("Loaded new setting 'settingRowSize' as " + window.$rowsize);
     }
 
@@ -78,9 +77,9 @@ function saveSettings(numResults, selectedCollection, rowsize, layout) {
     window.$rowsize = rowsize;
 
     if (window.$rowsize == "small") {
-            $("#table").addClass("table-sm");
+        $("#table").addClass("table-sm");
     } else {
-            $("#table").removeClass("table-sm");
+        $("#table").removeClass("table-sm");
     }
 
     setSetting("settingLayout", layout);
