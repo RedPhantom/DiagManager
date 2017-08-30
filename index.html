@@ -52,15 +52,13 @@
                 
                 //$("#table").html(window.headhtml + '<tbody><tr><td></td><td><div class="text-muted">Search above to get started.</div>'); // set help text for table.
 
-                loadSettings();
-                search("table", window.$data, "", 0, window.headhtml);
-                
+                loadSettings();               
 
                 if (getCookie("settingShowHelp") != "") {
                     $('#gettingstarted').hide();
                 }
             }
-        )
+        );
     </script>
     <h1 class="superheader" style="margin-bottom: 10px; margin-top: 10px;">ICD-9 ENTRY LOOKUP <small>Developed by Itay Asayag</small></h1>
     <!-- Toolbar -->
@@ -102,8 +100,8 @@
 			<small>Copyright &copy; 2017 - </small>
 			<a href="#" data-toggle="modal" data-target="#about">Itay Asayag</a>.
 			<small>Click the logo for more information. <strong>Version <kbd>1.0.0.0</kbd> (testing). 
-			Latest major update: <a href="https://github.com/RedPhantom/DiagManager"><kbd>07/07/2017</kbd></a>
-			</strong>. This website uses cookies. <a href="cookie-policy.htm">Learn more</a>. <a href="privacy-policy.htm">Privacy policy</a>.</small>
+			Latest major update: <a href="https://github.com/RedPhantom/DiagManager"><kbd>30/08/2017</kbd></a>
+			</strong>. This application uses cookies. <a href="cookie-policy.htm">Learn more</a>. <a href="privacy-policy.htm">Privacy policy</a>.</small>
 			</span>
     </nav>
     <script src="resources/js/bootstrap.min.js"></script>
